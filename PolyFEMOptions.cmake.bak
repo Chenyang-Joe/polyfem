@@ -1,0 +1,27 @@
+# PolyFEM Build Configuration with IPC Threading Isolation
+#
+# This configuration uses C++ threads for PolyFEM while allowing IPC Toolkit 
+# to use its native TBB threading in an isolated manner
+
+message(STATUS "Using PolyFEM C++ Threading with IPC Isolation")
+
+# Set PolyFEM to use C++ threads
+set(POLYFEM_THREADING "CPP" CACHE STRING "Use C++ threading" FORCE)
+
+# Disable parallel policies that might conflict with PolyFEM threading
+set(PSTL_USE_PARALLEL_POLICIES 0 CACHE BOOL "Disable PSTL" FORCE)
+set(_GLIBCXX_USE_TBB_PAR_BACKEND 0 CACHE BOOL "Disable GCC TBB backend" FORCE)
+
+# IPC Toolkit will use its default TBB but in isolated mode
+set(IPC_TOOLKIT_BUILD_TESTS OFF CACHE BOOL "Disable IPC tests" FORCE)
+set(IPC_TOOLKIT_BUILD_PYTHON OFF CACHE BOOL "Disable IPC Python bindings" FORCE)
+
+# Eigen threading configuration  
+set(EIGEN_USE_THREADS ON CACHE BOOL "Enable Eigen threading" FORCE)
+
+# Compiler definitions for PolyFEM
+add_definitions(-DPOLYFEM_WITH_CPP_THREADS)
+add_definitions(-DPSTL_USE_PARALLEL_POLICIES=0)
+add_definitions(-D_GLIBCXX_USE_TBB_PAR_BACKEND=0)
+
+message(STATUS "Threading configuration: PolyFEM(C++) + IPC(TBB isolated)")

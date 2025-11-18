@@ -58,6 +58,8 @@
 
 #include <polyfem/utils/autodiff.h>
 
+#include <polysolve/save_problem.hpp>
+
 using namespace Eigen;
 
 namespace polyfem
@@ -527,6 +529,10 @@ namespace polyfem
 		poly_edge_to_data.clear();
 		rhs.resize(0, 0);
 		basis_nodes_to_gbasis_nodes.resize(0, 0);
+
+		//benchy record mesh->dimension()
+		benchy::io::dim_global = mesh->dimension();
+		std::cout << "DIM UPDATE: " << benchy::io::dim_global << std::endl;
 
 		if (assembler::MultiModel *mm = dynamic_cast<assembler::MultiModel *>(assembler.get()))
 		{

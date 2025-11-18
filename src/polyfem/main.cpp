@@ -11,6 +11,11 @@
 #include <polyfem/utils/Logger.hpp>
 #include <polyfem/io/YamlToJson.hpp>
 
+#include <polysolve/save_problem.hpp>
+
+#include <thread>
+
+
 using namespace polyfem;
 using namespace solver;
 
@@ -92,7 +97,9 @@ int main(int argc, char **argv)
 	std::string hdf5_file = "";
 	input->add_option("--hdf5", hdf5_file, "Simulation HDF5 file")->check(CLI::ExistingFile);
 
-	input->require_option(1);
+	std::string mat_dir;
+	auto* opt_mat = command_line.add_option("--mat_dir", mat_dir, "Problem matrix save dir")
+		->check(CLI::ExistingDirectory | CLI::NonexistentPath);
 
 	std::string output_dir = "";
 	command_line.add_option("-o,--output_dir", output_dir, "Directory for output files")->check(CLI::ExistingDirectory | CLI::NonexistentPath);
@@ -117,6 +124,14 @@ int main(int argc, char **argv)
 		->transform(CLI::CheckedTransformer(SPDLOG_LEVEL_NAMES_TO_LEVELS, CLI::ignore_case));
 
 	CLI11_PARSE(command_line, argc, argv);
+
+	if (opt_mat->count() > 0) {
+		benchy::io::mat_save_global = mat_dir;
+		std::cout << "MAT_DIR: " << benchy::io::mat_save_global << std::endl;
+	} else {
+		std::cout << "MAT_DIR not set, keep original: " << benchy::io::mat_save_global << std::endl;
+	}
+	input->require_option(1);
 
 	json in_args = json({});
 

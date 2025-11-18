@@ -25,6 +25,8 @@
 
 #include <ipc/ipc.hpp>
 
+#include <polysolve/save_problem.hpp>
+
 namespace polyfem
 {
 	using namespace mesh;
@@ -68,6 +70,8 @@ namespace polyfem
 
 		for (int t = 1; t <= time_steps; ++t)
 		{
+			benchy::io::ts_global = t;
+			benchy::io::iter_global = 0;
 			double forward_solve_time = 0, remeshing_time = 0, global_relaxation_time = 0;
 
 			{

@@ -30,6 +30,11 @@ CPMAddPackage(
     GIT_TAG 3.4.0
     DOWNLOAD_ONLY TRUE
 )
+# CPMAddPackage(
+#     NAME eigen
+#     SOURCE_DIR /u/1/chenyang/LearnPolyFEM/eigen-3.4.0
+#     DOWNLOAD_ONLY ON
+# )
 
 add_library(Eigen3_Eigen INTERFACE)
 add_library(Eigen3::Eigen ALIAS Eigen3_Eigen)

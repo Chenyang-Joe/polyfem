@@ -131,13 +131,13 @@ namespace polyfem::solver
 				continue;
 			THessian tmp;
 			f->second_derivative(x, tmp);
-			if (tmp.coeffs().size() == 0 )
-			{
-				continue;
-			}else{
-				std::cout << f->name() << "hessian maxCoeff: " << tmp.coeffs().maxCoeff() << std::endl;
-				std::cout << f->name() << "hessian minCoeff: " << tmp.coeffs().minCoeff() << std::endl;
-			}
+			// if (tmp.coeffs().size() == 0 )
+			// {
+			// 	continue;
+			// }else{
+			// 	std::cout << f->name() << "hessian maxCoeff: " << tmp.coeffs().maxCoeff() << std::endl;
+			// 	std::cout << f->name() << "hessian minCoeff: " << tmp.coeffs().minCoeff() << std::endl;
+			// }
 			
 			hessian += tmp;
 		}

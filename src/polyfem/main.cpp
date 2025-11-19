@@ -13,9 +13,6 @@
 
 #include <polysolve/save_problem.hpp>
 
-#include <thread>
-
-
 using namespace polyfem;
 using namespace solver;
 
@@ -97,6 +94,7 @@ int main(int argc, char **argv)
 	std::string hdf5_file = "";
 	input->add_option("--hdf5", hdf5_file, "Simulation HDF5 file")->check(CLI::ExistingFile);
 
+	input->require_option(1);
 	std::string mat_dir;
 	auto* opt_mat = command_line.add_option("--mat_dir", mat_dir, "Problem matrix save dir")
 		->check(CLI::ExistingDirectory | CLI::NonexistentPath);
